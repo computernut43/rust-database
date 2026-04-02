@@ -95,10 +95,11 @@ runs:
         fi
 
         # Download libonnxruntime's static library and tell ORT crate to use it
-        mkdir /tmp/onnxruntime
+        tmp_dir=$(mktemp -d)
+        trap 'rm -rf "$tmp_dir"' EXIT
         curl -sSL https://github.com/supertone-inc/onnxruntime-build/releases/download/v${{ inputs.onnx-version }}/onnxruntime-linux-${{ steps.onnx.outputs.arch }}-static_lib-${{ inputs.onnx-version }}.tgz | \
-          tar -xz -C /tmp/onnxruntime/
-        export ORT_STRATEGY=system ORT_LIB_LOCATION=/tmp/onnxruntime/lib
+          tar -xz -C "$tmp_dir"
+        export ORT_STRATEGY=system ORT_LIB_LOCATION="$tmp_dir/lib"
 
         cargo build --target ${{ inputs.arch }} --no-default-features ${extra_args} --locked
 
