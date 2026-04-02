@@ -452,50 +452,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AMAZON_SECRET_KEY }}
 
   # ----------------------------------------
-  # Docker images
-  # ----------------------------------------
-
-  docker:
-    name: Build ${{ matrix.name }} (${{ matrix.build-target }})
-    needs: [ prepare-vars, publish ]
-    if: ${{ needs.prepare-vars.outputs.publish == 'true' }}
-    environment: ${{ needs.prepare-vars.outputs.release-name }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: Prod image
-            build-target: prod-ci
-            tag-suffix: ''
-          - name: Dev image
-            build-target: dev-ci
-            tag-suffix: -dev
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          ref: ${{ needs.prepare-vars.outputs.git-ref }}
-
-      - name: Sanitize tag prefix
-        id: tag
-        run: |
-          tag_prefix=$(echo '${{ needs.prepare-vars.outputs.name }}' | sed 's/[^a-zA-Z0-9_.-]/-/g' | tr '[:upper:]' '[:lower:]')
-          echo "tag-prefix=${tag_prefix}" >> $GITHUB_OUTPUT
-
-      - name: Build and push Docker image
-        uses: ./.github/actions/docker-build
-        with:
-          environment: ${{ needs.prepare-vars.outputs.release-name }}
-          tag-prefix: ${{ steps.tag.outputs.tag-prefix }}
-          build-target: ${{ matrix.build-target }}
-          tag-suffix: ${{ matrix.tag-suffix }}
-          push: true
-          latest: ${{ needs.prepare-vars.outputs.latest == 'true' && needs.prepare-vars.outputs.nightly-release != 'true' }}
-          docker-user: ${{ secrets.DOCKER_USER }}
-          docker-pass: ${{ secrets.DOCKER_PASS }}
-
-  # ----------------------------------------
   # macOS universal binary
   # ----------------------------------------
 
