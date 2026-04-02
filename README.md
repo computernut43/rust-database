@@ -93,7 +93,6 @@ View the [features](https://surrealdb.com/features), the latest [releases](https
 	- [Install on macOS](#install-on-macos)
 	- [Install on Linux](#install-on-linux)
 	- [Install on Windows](#install-on-windows)
-	- [Run using Docker](#run-using-docker)
 - [Quick look](#quick-look)
 - [Why SurrealDB](#why-surrealdb)
 	- [Database, API, and permissions](#database-api-and-permissions)
@@ -188,7 +187,7 @@ SurrealDB is available as a [managed cloud service](https://app.surrealdb.com/ov
 
 <h2><img height="20" src="./img/installation.svg">&nbsp;&nbsp;Installation</h2>
 
-SurrealDB is designed to be simple to install and simple to run - using just one command from your terminal. In addition to traditional installation, SurrealDB can be installed and run with HomeBrew, Docker, or using any other container orchestration tool such as Docker Compose, Docker Swarm, Rancher, or in Kubernetes.
+SurrealDB is designed to be simple to install and simple to run - using just one command from your terminal. In addition to traditional installation, SurrealDB can be installed and run with HomeBrew.
 
 <h4><a href="https://surrealdb.com/install"><img width="20" src="./img/apple.svg"></a>&nbsp;Install on macOS</h4>
 
@@ -237,20 +236,6 @@ If you want to test a version with the latest features, published every night, i
 ```ps1
 iex "& { $(irm https://windows.surrealdb.com) } -Nightly"
 ```
-
-<h4><a href="https://surrealdb.com/install"><img width="20" src="./img/docker.svg"></a>&nbsp;Run using Docker</h4>
-
-Docker can be used to manage and run SurrealDB database instances without the need to install any command-line tools. The SurrealDB docker container contains the full command-line tools for importing and exporting data from a running server, or for running a server itself.
-
-```bash
-docker run --rm --pull always --name surrealdb -p 8000:8000 surrealdb/surrealdb:latest start
-```
-
-For just getting started with a development server running in memory, you can pass the container a basic initialization to set the user and password as root and enable logging.
-
-```bash
-docker run --rm --pull always --name surrealdb -p 8000:8000 surrealdb/surrealdb:latest start --log info --user root --pass root memory
-``` 
 
 <h2><img height="20" src="./img/features.svg">&nbsp;&nbsp;Quick look</h2>
 

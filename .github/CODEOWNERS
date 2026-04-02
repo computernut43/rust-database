@@ -5,7 +5,6 @@
 /.github/ @surrealdb/ci
 
 # Configuration for deployment
-.dockerignore @surrealdb/ci
 build.rs @surrealdb/ci
 *.nix @surrealdb/ci
 flake.lock @surrealdb/ci

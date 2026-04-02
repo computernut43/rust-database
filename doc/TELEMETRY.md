@@ -4,10 +4,9 @@ SurrealDB leverages the tracing and opentelemetry libraries to instrument the co
 
 Both metrics and traces are pushed to an OTEL compatible receiver.
 
-For local development, you can start the observability stack defined in `dev/docker`. It spins up an instance of Opentelemetry collector, Grafana, Prometheus and Tempo:
+For local development, run an OTEL-compatible collector and point SurrealDB to it:
 
 ```
-$ docker-compose -f dev/docker/compose.yaml up -d
 $ SURREAL_TELEMETRY_PROVIDER=otlp OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:4317" surreal start
 ```
 
